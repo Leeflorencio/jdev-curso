@@ -6,44 +6,47 @@ public class AulaThreads {
 
     public static void main(String[] args) throws InterruptedException {
 
-        new Thread() {
+        Thread threadEmail = new Thread(thread1);
+        threadEmail.start();
 
-            public void run(){//codigo da rotina
-                for (int pos = 0; pos < 5; pos++){
-
-                    System.out.println("Inicio da rotina, envio de email...");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-
-                System.out.println("Fim da Thread 1");
-            };
-
-        }.start(); // inicia a thread paralelamente
-
-        //divisao
-
-        new Thread() {
-
-            public void run(){//codigo da rotina
-                for (int pos = 0; pos < 5; pos++){
-
-                    System.out.println("Envio de nota fiscal...");
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-
-                System.out.println("Fim da Thread 2");
-            };
-
-        }.start();
+        Thread threadNotaFiscal = new Thread(thread2);
+        threadNotaFiscal.start();
 
         JOptionPane.showMessageDialog(null, "sistema continua executando para o usuario");
     }
+
+    private static Runnable thread1 = new Runnable() {
+        @Override
+        public void run() {
+            //codigo da rotina
+            for (int pos = 0; pos < 5; pos++){
+
+                System.out.println("Inicio da rotina, envio de email...");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            System.out.println("Fim da Thread 1");
+        }
+    };
+
+    private static Runnable thread2 = new Runnable() {
+        @Override
+        public void run() {
+            for (int pos = 0; pos < 10; pos++){
+
+                System.out.println("Envio de nota fiscal...");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            System.out.println("Fim da Thread 2");
+        }
+    };
 }
